@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>MK AnimeVerse – Watch · Explore · Enjoy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  <a class="logo" href="#/">
+    <span class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 12 4l7 15"/><path d="M8.5 14h7"/></svg></span>
+    <span><b>MK AnimeVerse</b><small id="tagline">Watch · Explore · Enjoy</small></span>
+  </a>
+  <div class="search">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search anime or genres…" autocomplete="off" aria-label="Search anime">
+    <div class="suggest" id="suggest"></div>
+  </div>
+  <div class="actions">
+    <button class="icon-btn" id="setBtn" aria-label="Settings" title="Settings">⚙️</button>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+    <span id="auth"></span>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<div class="shell">
+  <aside class="side" id="side">
+    <nav class="nav" id="nav"></nav>
+    <h4 id="genH">Genres</h4>
+    <div class="glist" id="glist"></div>
+    <div class="quote"><span id="quoteT">Anime is not just a show… it's a feeling.</span><small>– MK AnimeVerse</small></div>
+  </aside>
+  <main id="view" tabindex="-1"></main>
+</div>
+
+<nav class="bottom" id="bottom"></nav>
+
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-label="Account">
+  <div class="box">
+    <h2 id="authTitle">Welcome back</h2>
+    <p id="authSub">Log in to sync your watchlist on this device.</p>
+    <div class="tabs"><button id="tabLogin" class="on" data-i18n="login">Login</button><button id="tabSignup" data-i18n="signup">Sign Up</button></div>
+    <div class="field" id="nameField" style="display:none"><label for="aName" data-i18n="name">Name</label><input id="aName" autocomplete="name"></div>
+    <div class="field"><label for="aEmail" data-i18n="email">Email</label><input id="aEmail" type="email" autocomplete="email"></div>
+    <div class="field"><label for="aPass" data-i18n="password">Password</label><div class="pw"><input id="aPass" type="password" autocomplete="current-password"><button type="button" id="pwToggle" aria-label="Show password" aria-pressed="false">👁</button></div></div>
+    <div class="field" id="passField2" style="display:none"><label for="aPass2">Confirm password</label><div class="pw"><input id="aPass2" type="password" autocomplete="new-password"><button type="button" class="pwt" data-pwt="aPass2" aria-label="Show password">👁</button></div></div>
+    <div class="field" id="codeField" style="display:none"><label for="aCode">Secret code (needed to reset your password later)</label><div class="pw"><input id="aCode" type="password" autocomplete="off" placeholder="At least 4 characters"><button type="button" class="pwt" data-pwt="aCode" aria-label="Show code">👁</button></div></div>
+    <div class="err" id="aErr"></div>
+    <button type="button" class="linkbtn" id="forgotLink">Forgot password?</button>
+    <div style="display:flex;gap:10px"><button class="btn primary" id="aGo" style="flex:1;justify-content:center">Log in</button><button class="btn" id="aCancel" data-i18n="cancel">Cancel</button></div>
+    <p style="font-size:12px;color:var(--muted);margin:14px 0 0">Demo accounts live only in this browser. The first account created becomes the admin. Connect a real backend before going public.</p>
+  </div>
+</div>
+<div class="modal" id="resetModal" role="dialog" aria-modal="true" aria-label="Reset password">
+  <div class="box">
+    <h2>Reset password</h2>
+    <p>Enter your email, the secret code you chose at signup, and a new password.</p>
+    <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email" autocomplete="email"></div>
+    <div class="field"><label for="rCode">Secret code</label><div class="pw"><input id="rCode" type="password" inputmode="numeric" autocomplete="one-time-code"><button type="button" class="pwt" data-pwt="rCode" aria-label="Show code">👁</button></div></div>
+    <div class="field"><label for="rPass">New password</label><div class="pw"><input id="rPass" type="password" autocomplete="new-password"><button type="button" class="pwt" data-pwt="rPass" aria-label="Show password">👁</button></div></div>
+    <div class="field"><label for="rPass2">Confirm new password</label><div class="pw"><input id="rPass2" type="password" autocomplete="new-password"><button type="button" class="pwt" data-pwt="rPass2" aria-label="Show password">👁</button></div></div>
+    <div class="err" id="rErr"></div>
+    <div style="display:flex;gap:10px"><button class="btn primary" id="rGo" style="flex:1;justify-content:center">Reset password</button><button class="btn" id="rCancel">Cancel</button></div>
+  </div>
+</div>
+<div class="modal" id="setModal" role="dialog" aria-modal="true" aria-label="Settings">
+  <div class="box">
+    <h2 data-i18n="settings">Settings</h2>
+    <p data-i18n="set_note">Interface language, video quality and audio/subtitle preferences are saved on this device.</p>
+    <div class="field"><label for="sLang" data-i18n="language">Language</label><select id="sLang"></select></div>
+    <div class="field"><label for="sQual" data-i18n="quality">Video quality</label><select id="sQual"></select></div>
+    <div class="field"><label for="sAudio" data-i18n="audio">Audio language</label><select id="sAudio"></select></div>
+    <div class="field"><label for="sSub" data-i18n="subtitles">Subtitles</label><select id="sSub"></select></div>
+    <div style="display:flex;gap:10px"><button class="btn primary" id="sSave" style="flex:1;justify-content:center" data-i18n="save">Save</button><button class="btn" id="sClose" data-i18n="close">Close</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="player.js"></script>
+<script src="script.js"></script>
+<script src="effects.js"></script>
+</body>
+</html>
